@@ -10,6 +10,22 @@ import { setupControls } from '@/core/controls';
 import { createFrame } from '@/gallery/frames';
 import { projects } from '@/data/projects';
 import { LEFT_WALL_X, FRAME_MOUNT_Y, FRAME_Z_POSITIONS } from '@/data/constants';
+import { setupLoadingScreen, updateLoadingProgress, hideLoadingScreen } from '@/ui/loading';
+import { loadAssets, onLoadProgress, onLoadComplete } from '@/core/loader';
+
+// ── Phase 11: Loading Screen ──────────────────────────────
+setupLoadingScreen();
+
+onLoadProgress((progress) => {
+    updateLoadingProgress(progress);
+});
+
+onLoadComplete(() => {
+    hideLoadingScreen();
+});
+
+// Trigger load
+loadAssets();
 
 // Mount the Three.js canvas to the DOM
 mountCanvas();

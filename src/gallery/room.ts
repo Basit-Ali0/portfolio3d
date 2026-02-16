@@ -17,6 +17,8 @@ import {
     baseboardMat,
 } from '@/gallery/materials';
 
+import { createFloorTexture } from '@/core/loader';
+
 /**
  * Creates the main gallery room geometry.
  * Returns a Group containing floor, ceiling, walls, and baseboards.
@@ -25,6 +27,9 @@ export function createRoom(): THREE.Group {
     const roomGroup = new THREE.Group();
 
     // Materials from @/gallery/materials
+    // Update floor material with generated texture
+    floorMat.map = createFloorTexture();
+    floorMat.needsUpdate = true; // Ensure Three.js picks up the change
 
     // ── 1. Floor ──────────────────────────────────────────────
     // PlaneGeometry(width, height)
