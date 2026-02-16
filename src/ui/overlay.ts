@@ -128,16 +128,29 @@ function styleButton(el: HTMLElement) {
  * Show the overlay for a specific project.
  * Unlocks controls so cursor is visible.
  */
-export function showOverlay(project: Project, controls: PointerLockControls) {
+/**
+ * Show the overlay for a specific project.
+ * Unlocks controls so cursor is visible.
+ */
+export function showOverlay(project: Project | 'ABOUT_ME', controls: PointerLockControls) {
     if (!overlayContainer) setupOverlay();
 
     activeControls = controls;
     controls.unlock(); // Release mouse
 
-    titleEl.textContent = project.title;
-    descriptionEl.textContent = project.description;
-    techStackEl.textContent = project.techStack.join(' · ');
-    linkEl.href = project.link;
+    if (project === 'ABOUT_ME') {
+        titleEl.textContent = 'About Me';
+        descriptionEl.textContent = 'I am a passionate 3D web developer specializing in immersive experiences. I love combining technical engineering with creative design to build memorable digital worlds.';
+        techStackEl.textContent = 'TypeScript · Three.js · WebGL · React';
+        linkEl.textContent = 'Download Resume';
+        linkEl.href = '/resume.pdf';
+    } else {
+        titleEl.textContent = project.title;
+        descriptionEl.textContent = project.description;
+        techStackEl.textContent = project.techStack.join(' · ');
+        linkEl.textContent = 'Visit Project';
+        linkEl.href = project.link;
+    }
 
     if (overlayContainer) {
         overlayContainer.style.display = 'flex';

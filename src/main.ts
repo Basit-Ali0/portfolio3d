@@ -97,10 +97,15 @@ document.addEventListener('click', () => {
         }
 
         if (target && target.userData.id) {
-            console.log('Clicked project:', target.userData.id);
-            const project = projects.find(p => p.id === target.userData.id);
-            if (project) {
-                showOverlay(project, controls);
+            console.log('Clicked:', target.userData.id);
+            
+            if (target.userData.id === 'about-me') {
+                showOverlay('ABOUT_ME', controls);
+            } else {
+                const project = projects.find(p => p.id === target.userData.id);
+                if (project) {
+                    showOverlay(project, controls);
+                }
             }
         }
     }
