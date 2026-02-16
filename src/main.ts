@@ -13,10 +13,12 @@ import { createEntranceDoor, createResumeDoor, openDoor } from '@/gallery/door';
 import { projects } from '@/data/projects';
 import { LEFT_WALL_X, FRAME_MOUNT_Y, FRAME_Z_POSITIONS } from '@/data/constants';
 import { setupLoadingScreen, updateLoadingProgress, hideLoadingScreen } from '@/ui/loading';
+import { setupHUD, updateHUDState } from '@/ui/hud';
 import { loadAssets, onLoadProgress, onLoadComplete } from '@/core/loader';
 
 // ── Phase 11: Loading Screen ──────────────────────────────
 setupLoadingScreen();
+setupHUD(); // Init HUD (hidden or showing start message)
 
 onLoadProgress((progress) => {
     updateLoadingProgress(progress);
@@ -24,6 +26,8 @@ onLoadProgress((progress) => {
 
 onLoadComplete(() => {
     hideLoadingScreen();
+    // Show start hint
+    updateHUDState(false); // "Click to Resume/Start"
 });
 
 // Trigger load
@@ -79,6 +83,14 @@ projects.forEach((project, index) => {
 // ── Phase 6: Controls ─────────────────────────────────────
 // Pass camera and renderer domElement to controls
 const controls = setupControls(camera, renderer.domElement);
+
+controls.addEventListener('lock', () => {
+    updateHUDState(true);
+});
+
+controls.addEventListener('unlock', () => {
+    updateHUDState(false);
+});
 
 // ── Phase 10: Interaction & Overlay ───────────────────────
 import { setupOverlay, showOverlay } from '@/ui/overlay';
