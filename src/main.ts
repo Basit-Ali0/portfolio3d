@@ -48,7 +48,47 @@ projects.forEach((project, index) => {
 
 // ── Phase 6: Controls ─────────────────────────────────────
 // Pass camera and renderer domElement to controls
-setupControls(camera, renderer.domElement);
+const controls = setupControls(camera, renderer.domElement);
+
+// ── Phase 10: Interaction & Overlay ───────────────────────
+import { setupOverlay, showOverlay } from '@/ui/overlay';
+import * as THREE from 'three';
+
+setupOverlay(); // Init DOM
+
+const raycaster = new THREE.Raycaster();
+const center = new THREE.Vector2(0, 0); // Center of screen
+
+document.addEventListener('click', () => {
+    if (!controls.isLocked) return; // Only interact when looked
+
+    // Raycast from camera center
+    raycaster.setFromCamera(center, camera);
+
+    // Check intersections with all children of scene (or specific group)
+    // Optimization: valid targets are frames.
+    // We can filter by userData.id presence which we set in createFrame
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
+    if (intersects.length > 0) {
+        // Find first object with project ID in its parent group
+        const hit = intersects[0].object;
+        // Traverse up to find the group with userData.id
+        let target = hit;
+        while (target && !target.userData.id) {
+            if (target.parent) target = target.parent;
+            else break;
+        }
+
+        if (target && target.userData.id) {
+            console.log('Clicked project:', target.userData.id);
+            const project = projects.find(p => p.id === target.userData.id);
+            if (project) {
+                showOverlay(project, controls);
+            }
+        }
+    }
+});
 
 // Start the render loop
 startLoop();
