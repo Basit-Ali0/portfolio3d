@@ -8,6 +8,8 @@ import { createRoom } from '@/gallery/room';
 import { createLighting } from '@/gallery/lighting';
 import { setupControls } from '@/core/controls';
 import { createFrame } from '@/gallery/frames';
+import { createPedestal } from '@/gallery/pedestal';
+import { createEntranceDoor, createResumeDoor, openDoor } from '@/gallery/door';
 import { projects } from '@/data/projects';
 import { LEFT_WALL_X, FRAME_MOUNT_Y, FRAME_Z_POSITIONS } from '@/data/constants';
 import { setupLoadingScreen, updateLoadingProgress, hideLoadingScreen } from '@/ui/loading';
@@ -37,6 +39,18 @@ scene.add(room);
 // ── Phase 4: Lighting ─────────────────────────────────────
 const lighting = createLighting();
 scene.add(lighting);
+
+// ── Phase 12: Pedestal ────────────────────────────────────
+const pedestal = createPedestal();
+pedestal.position.set(0, 0, 20);
+scene.add(pedestal);
+
+// ── Phase 13: Doors ───────────────────────────────────────
+const entranceDoor = createEntranceDoor();
+scene.add(entranceDoor);
+
+const resumeDoor = createResumeDoor();
+scene.add(resumeDoor);
 
 // ── Phase 9: All Frames ───────────────────────────────────
 import { RIGHT_WALL_X } from '@/data/constants';
@@ -98,9 +112,11 @@ document.addEventListener('click', () => {
 
         if (target && target.userData.id) {
             console.log('Clicked:', target.userData.id);
-            
+
             if (target.userData.id === 'about-me') {
                 showOverlay('ABOUT_ME', controls);
+            } else if (target.userData.id === 'resume-door') {
+                openDoor(resumeDoor);
             } else {
                 const project = projects.find(p => p.id === target.userData.id);
                 if (project) {
