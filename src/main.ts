@@ -3,12 +3,17 @@
 //  Phase 2: Initialize scene, renderer, camera → dark empty room
 // ─────────────────────────────────────────────────────────
 
-import { mountCanvas, startLoop } from '@/core/scene';
+import { mountCanvas, startLoop, scene } from '@/core/scene';
+import { createRoom } from '@/gallery/room';
 
 // Mount the Three.js canvas to the DOM
 mountCanvas();
 
-// Start the render loop — currently renders an empty dark room (#0d0d0d)
+// ── Phase 3: Room Geometry ────────────────────────────────
+const room = createRoom();
+scene.add(room);
+
+// Start the render loop
 startLoop();
 
-console.log('[portfolio3d] Phase 2 — Dark empty room rendering.');
+console.log('[portfolio3d] Phase 3 — Room geometry added (Dark view expected until lighting Phase 4).');
