@@ -9,17 +9,13 @@ import {
     ROOM_LENGTH,
     ROOM_HEIGHT,
     WALL_THICKNESS,
-    COLOR_WALLS,
-    COLOR_CEILING,
-    COLOR_FLOOR_BASE,
-    COLOR_BASEBOARD,
-    WALL_ROUGHNESS,
-    WALL_METALNESS,
-    FLOOR_ROUGHNESS,
-    FLOOR_METALNESS,
-    CEILING_ROUGHNESS,
-    CEILING_METALNESS,
 } from '@/data/constants';
+import {
+    wallMat,
+    floorMat,
+    ceilingMat,
+    baseboardMat,
+} from '@/gallery/materials';
 
 /**
  * Creates the main gallery room geometry.
@@ -28,32 +24,7 @@ import {
 export function createRoom(): THREE.Group {
     const roomGroup = new THREE.Group();
 
-    // ── Materials (Base color only, no textures yet) ──────────
-    // These will respond to light in Phase 4.
-    const wallMat = new THREE.MeshStandardMaterial({
-        color: COLOR_WALLS,       // #f0ece4
-        roughness: WALL_ROUGHNESS,
-        metalness: WALL_METALNESS,
-    });
-
-    const floorMat = new THREE.MeshStandardMaterial({
-        color: COLOR_FLOOR_BASE,  // #8b6914
-        roughness: FLOOR_ROUGHNESS,
-        metalness: FLOOR_METALNESS,
-    });
-
-    const ceilingMat = new THREE.MeshStandardMaterial({
-        color: COLOR_CEILING,     // #0d0d0d
-        roughness: CEILING_ROUGHNESS,
-        metalness: CEILING_METALNESS,
-        side: THREE.BackSide,     // Render inside face
-    });
-
-    const baseboardMat = new THREE.MeshStandardMaterial({
-        color: COLOR_BASEBOARD,   // #1a1a1a
-        roughness: 0.8,
-        metalness: 0.1,
-    });
+    // Materials from @/gallery/materials
 
     // ── 1. Floor ──────────────────────────────────────────────
     // PlaneGeometry(width, height)
