@@ -22,14 +22,29 @@ scene.add(room);
 const lighting = createLighting();
 scene.add(lighting);
 
-// ── Phase 7: One Frame (Test) ─────────────────────────────
-const project = projects[0]; // "Project One"
-const frame = createFrame(project);
-// Position: Left wall, first Z slot
-frame.position.set(LEFT_WALL_X, FRAME_MOUNT_Y, FRAME_Z_POSITIONS[0]);
-// Rotate to face inward (Right = +X direction)
-frame.rotation.y = Math.PI / 2;
-scene.add(frame);
+// ── Phase 9: All Frames ───────────────────────────────────
+import { RIGHT_WALL_X } from '@/data/constants';
+
+projects.forEach((project, index) => {
+    const frame = createFrame(project);
+
+    // First 3 on Left Wall, Next 3 on Right Wall
+    const isLeft = index < 3;
+    const zIndex = index % 3; // 0, 1, 2
+    const z = FRAME_Z_POSITIONS[zIndex]; // 5, 11, 17
+
+    if (isLeft) {
+        // Left Wall (-X), Facing Right (+X)
+        frame.position.set(LEFT_WALL_X, FRAME_MOUNT_Y, z);
+        frame.rotation.y = Math.PI / 2;
+    } else {
+        // Right Wall (+X), Facing Left (-X)
+        frame.position.set(RIGHT_WALL_X, FRAME_MOUNT_Y, z);
+        frame.rotation.y = -Math.PI / 2;
+    }
+
+    scene.add(frame);
+});
 
 // ── Phase 6: Controls ─────────────────────────────────────
 // Pass camera and renderer domElement to controls
