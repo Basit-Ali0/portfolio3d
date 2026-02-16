@@ -5,6 +5,7 @@
 
 import { mountCanvas, startLoop, scene } from '@/core/scene';
 import { createRoom } from '@/gallery/room';
+import { createLighting } from '@/gallery/lighting';
 
 // Mount the Three.js canvas to the DOM
 mountCanvas();
@@ -13,7 +14,11 @@ mountCanvas();
 const room = createRoom();
 scene.add(room);
 
+// ── Phase 4: Lighting ─────────────────────────────────────
+const lighting = createLighting();
+scene.add(lighting);
+
 // Start the render loop
 startLoop();
 
-console.log('[portfolio3d] Phase 3 — Room geometry added (Dark view expected until lighting Phase 4).');
+console.log('[portfolio3d] Phase 4 — Lighting added (Room should be visible now).');

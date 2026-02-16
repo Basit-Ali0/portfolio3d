@@ -38,6 +38,7 @@ export const FRAME_OUTER_DEPTH = 0.06;
 // ── Lighting ──────────────────────────────────────────────
 export const AMBIENT_INTENSITY = 0.08;
 export const AMBIENT_COLOR = 0xfff5e6;
+export const SPOTLIGHT_COLOR = 0xfff5e0; // Warm white
 export const SPOTLIGHT_ANGLE = Math.PI / 9; // ~20°
 export const SPOTLIGHT_PENUMBRA = 0.45;
 export const SPOTLIGHT_DECAY = 2;
