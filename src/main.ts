@@ -15,10 +15,14 @@ import { LEFT_WALL_X, FRAME_MOUNT_Y, FRAME_Z_POSITIONS } from '@/data/constants'
 import { setupLoadingScreen, updateLoadingProgress, hideLoadingScreen } from '@/ui/loading';
 import { setupHUD, updateHUDState } from '@/ui/hud';
 import { loadAssets, onLoadProgress, onLoadComplete } from '@/core/loader';
+import { setupPostProcessing } from '@/core/postprocessing';
 
 // ── Phase 11: Loading Screen ──────────────────────────────
 setupLoadingScreen();
-setupHUD(); // Init HUD (hidden or showing start message)
+setupHUD();
+
+// ── Phase 15: Post Processing (Bloom) ─────────────────────
+setupPostProcessing();
 
 onLoadProgress((progress) => {
     updateLoadingProgress(progress);
